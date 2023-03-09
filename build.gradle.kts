@@ -17,11 +17,25 @@ repositories {
 
 extra["springCloudVersion"] = "2022.0.1"
 
+configurations {
+    implementation {
+        exclude(module = "spring-boot-starter-tomcat")
+    }
+}
+
 dependencies {
+    //implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
+    implementation("io.netty:netty-tcnative-boringssl-static:2.0.59.Final")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 }
 
 dependencyManagement {
