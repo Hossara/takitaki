@@ -24,11 +24,12 @@ configurations {
 }
 
 dependencies {
-    //implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("io.netty:netty-tcnative-boringssl-static:2.0.59.Final")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
