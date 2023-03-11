@@ -1,31 +1,30 @@
 package org.yastech.gateway.api
 
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.validation.BindingResult
+import org.springframework.web.bind.annotation.*
 import org.yastech.gateway.docs.User
+import org.yastech.gateway.models.RegisterUser
 import org.yastech.gateway.services.UserService
-import org.yastech.gateway.utils.JWTService
-import org.yastech.gateway.utils.PasswordEncoder
-import org.yastech.gateway.utils.StringValidator
+import org.yastech.gateway.utils.*
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/auth")
 class AuthApi
 (
     private val userService: UserService,
-    private val stringValidator: StringValidator,
     private val passwordEncoder: PasswordEncoder,
-    private val jwtService: JWTService
+    private val jwtService: JWTService,
+    private val generator: Generator
 )
 {
     @PostMapping("/login")
     fun login(@RequestParam email: String, @RequestParam password: String): Mono<MutableMap<String, String>>
     {
-        if (stringValidator.isValidEmail(email))
+        if (isValidEmail(email))
             return mutableMapOf("status" to "error", "code" to "email_inv").toMono()
 
         return if(userService.exists(email))
@@ -57,5 +56,47 @@ class AuthApi
             else mutableMapOf("status" to "error", "code" to "up_inc").toMono()
         }
         else mutableMapOf("status" to "error", "code" to "up_inc").toMono()
+    }
+
+    @PostMapping("/register")
+    @CrossOrigin(origins = ["*"])
+    fun register(
+        @ModelAttribute user: RegisterUser,
+        bindingResult: BindingResult
+    ): Mono<out MutableMap<String, out Any>>
+    {
+        return if(!userService.exists(user.email))
+        {
+            val validate = validateFields(user)
+
+            if (validate["status"] == "success")
+            {
+                val valid = validate["user"] as RegisterUser
+                val birthdayArray = valid.birthday.split("/")
+
+                val birthday = LocalDate.of(
+                    birthdayArray[2].toInt(),
+                    birthdayArray[1].toInt(),
+                    birthdayArray[0].toInt()
+                )
+
+                val saved = userService.save(User(
+                    id = null,
+                    createdAt = LocalDateTime.now(),
+                    email = valid.email,
+                    firstname = valid.firstname,
+                    lastname = valid.lastname,
+                    birthday = birthday,
+                    gender = valid.gender,
+                    password = valid.password,
+                    valid = false,
+                    username = generator.generateUUID()
+                ))
+
+                mutableMapOf("status" to "success", "id" to saved.id!!).toMono()
+            }
+            else validate.toMono()
+        }
+        else mutableMapOf("status" to "error", "code" to "us_exi").toMono()
     }
 }
