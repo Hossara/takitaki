@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: TakiTaki
+  description: Gateway & UserService api test
+  version: 1.0.0
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+  contact:
+    name: Hossein Araghi
+    email: hoseinaraghi84@gmail.com
+servers:
+  - url: 'http://localhost:8080'
+    description: local test
+paths:
+  /get:
+    get:
+      operationId: gateway_test
+      summary: gateway_test
+      responses:
+        '200':
+          description: Success
+
+  /auth/register:
+    post:
+      operationId: register
+      summary: Register operation test
+      requestBody:
+        content:
+          'application/x-www-form-urlencoded':
+            schema:
+              type: object
+              properties:
+                email:
+                  default: "hoseinaraghi84@gmail.com"
+                  description: User email field
+                  type: string
+                firstname:
+                  default: "Hossein"
+                  description: User firstname field
+                  type: string
+                lastname:
+                  default: "Araghi"
+                  description: User lastname field
+                  type: string
+                birthday:
+                  default: "03/11/2023"
+                  description: User birthday field
+                  type: string
+                gender:
+                  default: "MALE"
+                  description: User birthday field
+                  type: string
+                  enum:
+                    - MALE
+                    - FEMALE
+                    - OTHER
+                password:
+                  default: "1234"
+                  description: User password field
+                  type: string
+              required:
+                - email
+                - lastname
+                - birthday
+                - gender
+                - password
+      responses:
+        '200':
+          description: Success
+
+        default:
+          description: Success
