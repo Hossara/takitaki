@@ -1,10 +1,10 @@
 package org.yastech.gateway.utils
 
 import org.yastech.gateway.GENDER
+import org.yastech.gateway.isNotInt
 import org.yastech.gateway.models.RegisterUser
 import java.time.LocalDate
 
-fun String.isNotInt() = toIntOrNull() == null
 fun validateFields(user: RegisterUser): MutableMap<String, Any>
 {
     val birthday = user.birthday.split("/")
