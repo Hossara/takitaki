@@ -1,7 +1,0 @@
-spring:
-  main:
-    web-application-type: reactive
-
-  data:
-    mongodb:
-      auto-index-creation: true
