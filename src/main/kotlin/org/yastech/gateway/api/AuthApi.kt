@@ -2,8 +2,10 @@ package org.yastech.gateway.api
 
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
+import org.yastech.gateway.docs.InvalidUser
 import org.yastech.gateway.docs.User
 import org.yastech.gateway.models.RegisterUser
+import org.yastech.gateway.services.InvalidUserService
 import org.yastech.gateway.services.UserService
 import org.yastech.gateway.utils.*
 import reactor.core.publisher.Mono
@@ -16,6 +18,7 @@ import java.time.LocalDateTime
 class AuthApi
 (
     private val userService: UserService,
+    private val invalidUserService: InvalidUserService,
     private val passwordEncoder: PasswordEncoder,
     private val jwtService: JWTService,
     private val generator: Generator
@@ -80,17 +83,47 @@ class AuthApi
                     birthdayArray[0].toInt()
                 )
 
-                val saved = userService.save(User(
+                if(invalidUserService.exists(valid.email))
+                {
+                    val data = invalidUserService.get(valid.email)
+
+                    if(data.requestTimes == 3)
+                    {
+                        data.expireAt = LocalDateTime.now().plusHours(1)
+                        invalidUserService.save(data)
+
+                        return mutableMapOf(
+                            "status" to "error",
+                            "code" to "too_req",
+                            "msg" to "Your number of requests exceeded the limit. Please try again in 1 hour!"
+                        ).toMono()
+                    }
+                    else
+                    {
+                        data.requestTimes = data.requestTimes + 1
+                        data.expireAt = LocalDateTime.now().plusSeconds(30)
+                        invalidUserService.save(data)
+
+                        return mutableMapOf(
+                            "status" to "error",
+                            "code" to "n_req",
+                            "msg" to "You can make ${
+                                if(data.requestTimes == 3) "no" else 3 - data.requestTimes
+                            } more requests in less time. Or you can wait 30 seconds for your limit to be removed!"
+                        ).toMono()
+                    }
+                }
+
+                val saved = invalidUserService.save(InvalidUser(
                     id = null,
-                    createdAt = LocalDateTime.now(),
+                    expireAt = LocalDateTime.now().plusSeconds(30),
                     email = valid.email,
                     firstname = valid.firstname,
                     lastname = valid.lastname,
                     birthday = birthday,
                     gender = valid.gender,
                     password = valid.password,
-                    valid = false,
-                    username = generator.generateUUID()
+                    requestTimes = 1
                 ))
 
                 mutableMapOf("status" to "success", "id" to saved.id!!).toMono()

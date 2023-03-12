@@ -19,8 +19,7 @@ data class User
     var birthday: LocalDate,
     var createdAt: LocalDateTime,
     var gender: GENDER,
-    var password: String,
-    var valid: Boolean?
+    var password: String
 )
 
 interface UserRepository: MongoRepository<User, String>
