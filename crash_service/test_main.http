@@ -1,0 +1,6 @@
+# Test FastAPI endpoints
+
+POST http://127.0.0.1:8001/report?err=MailServiceError&msg=Error%20While%20Sending%20Email&err_type=CRASH
+Accept: application/json
+
+###
