@@ -32,6 +32,7 @@ print(f"INFO:     SMTP_PASS: {smtp_password}")
 
 @app.post("/report")
 async def root(err: str = "", msg: str = "", err_type: str = "WARNING"):
+    # Report Object
     report = {
         "error": err,
         "date": datetime.datetime.now(),
@@ -39,19 +40,25 @@ async def root(err: str = "", msg: str = "", err_type: str = "WARNING"):
         "type": err_type
     }
 
+    # Log Report
     print(f"INFO:     New report: {report}")
 
     try:
+        # Insert Report To Database And Collect Report ID
         insert = reports.insert_one(report)
         report_id = json.loads(json_util.dumps(insert.inserted_id))["$oid"]
 
+        # Send Report Alert Email
         mail.send(f"{err} Error!", f"{msg}\nError type: {err_type}")
 
+        # Log Report And Finish
         print(f"INFO:     Report saved with id: {report_id}")
         return {"status": "success", "id": report_id}
 
     except:
+        # Send Error Alert Email
         mail.send(message="Error while saving report")
 
+        # Log Report And Finish
         print(f"INFO:     Error while saving report")
         return {"status": "error", "msg": "error while saving report"}
