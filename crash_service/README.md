@@ -1,4 +1,4 @@
-# Crash Servie
+# CrashReport Service
 TakiTaki crash report service
 
 - [x] Saving to database
