@@ -1,6 +1,7 @@
 package org.yastech.gateway.utils
 
 import org.springframework.stereotype.Service
+import org.yastech.gateway.then
 import org.yastech.gateway.utf8
 import java.net.URI
 import java.net.http.HttpClient
@@ -14,14 +15,16 @@ class HttpClient
         query.map {(k, v) -> "${(k.utf8())}=${v.toString().utf8()}"}
             .joinToString("&")
 
-    fun get(url: String, query: MutableMap<String, Any>): Any
+    fun get(url: String, query: MutableMap<String, Any> = mutableMapOf()): Any
     {
         val client = HttpClient.newBuilder().build()
 
         val request = HttpRequest.newBuilder()
-            .uri(URI.create("$url${urlQueryBuilder(query)}"))
+            .uri(URI.create("$url${
+                (query.isNotEmpty() then "?${urlQueryBuilder(query)}") ?: ""
+            }"))
             .build()
 
-        return client.send(request, HttpResponse.BodyHandlers.ofString())
+        return client.send(request, HttpResponse.BodyHandlers.ofString()).body()
     }
 }
