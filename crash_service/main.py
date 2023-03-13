@@ -5,19 +5,29 @@ import json
 import datetime
 from fastapi import FastAPI
 from dotenv import load_dotenv
+from email_sender import sender
 
 app = FastAPI()
 load_dotenv()
 
+# Database Config
 db_url = os.getenv("DB_URL")
 db_client = pymongo.MongoClient(db_url)
 db = db_client["takitaki_crash"]
 reports = db["reports"]
 
+# Smtp Config
+smtp_email = os.getenv("SMTP_EMAIL")
+smtp_password = os.getenv("SMTP_PASS")
+mail = sender(smtp_email, smtp_password)
+
+# Start Logs
 print(f"INFO:     Crash report service started!")
 print(f"INFO:     DB_URL: {db_url}")
 print(f"INFO:     DB_NAME: {db.name}")
 print(f"INFO:     DB_COLLECTION: {reports.name}")
+print(f"INFO:     SMTP_EMAIL: {smtp_email}")
+print(f"INFO:     SMTP_PASS: {smtp_password}")
 
 
 @app.post("/report")
@@ -35,9 +45,13 @@ async def root(err: str = "", msg: str = "", err_type: str = "WARNING"):
         insert = reports.insert_one(report)
         report_id = json.loads(json_util.dumps(insert.inserted_id))["$oid"]
 
+        mail.send(f"{err} Error!", f"{msg}\nError type: {err_type}")
+
         print(f"INFO:     Report saved with id: {report_id}")
         return {"status": "success", "id": report_id}
 
     except:
+        mail.send(message="Error while saving report")
+
         print(f"INFO:     Error while saving report")
         return {"status": "error", "msg": "error while saving report"}
