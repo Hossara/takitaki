@@ -21,7 +21,7 @@ class sender:
                 server.login(self.email, self.password)
 
                 # Send
-                server.sendmail(self.email, self.email, f"Subject: {subject}\n{message}")
+                server.sendmail(self.email, self.email, f"Subject: {subject}\n{message}\nTakiTaki")
 
         except:
             print(f"INFO:     Error while sending report email!")

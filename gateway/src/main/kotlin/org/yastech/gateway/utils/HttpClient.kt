@@ -1,6 +1,7 @@
 package org.yastech.gateway.utils
 
 import org.springframework.stereotype.Service
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.yastech.gateway.then
 import org.yastech.gateway.utf8
 import java.net.URI
@@ -23,6 +24,22 @@ class HttpClient
             .uri(URI.create("$url${
                 (query.isNotEmpty() then "?${urlQueryBuilder(query)}") ?: ""
             }"))
+            .version(HttpClient.Version.HTTP_1_1)
+            .build()
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString()).body()
+    }
+
+    fun post(url: String, query: MutableMap<String, Any> = mutableMapOf()): Any
+    {
+        val client = HttpClient.newBuilder().build()
+
+        val request = HttpRequest.newBuilder()
+            .uri(URI.create("$url${
+                (query.isNotEmpty() then "?${urlQueryBuilder(query)}") ?: ""
+            }"))
+            .version(HttpClient.Version.HTTP_1_1)
+            .POST(HttpRequest.BodyPublishers.noBody())
             .build()
 
         return client.send(request, HttpResponse.BodyHandlers.ofString()).body()
