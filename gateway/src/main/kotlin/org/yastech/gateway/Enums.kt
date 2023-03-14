@@ -6,3 +6,15 @@ enum class GENDER
     FEMALE,
     OTHER
 }
+
+enum class CRASH(val value: String)
+{
+    SEND_EMAIL_ERROR("SendingEmailError")
+}
+
+enum class ERROR
+{
+    WARNING,
+    INFO,
+    ERROR
+}
