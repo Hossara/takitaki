@@ -1,13 +1,7 @@
 HELP.md
 .gradle
 .env
-node_modules
 *.log*
-.nuxt
-.nitro
-.cache
-.output
-dist
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -42,3 +36,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Nuxt.js & Node.js ##
+.nuxt
+.nitro
+.cache
+.output
+dist
+node_modules
