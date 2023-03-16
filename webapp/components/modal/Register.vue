@@ -7,18 +7,6 @@ defineProps<{
 const axios = useNuxtApp().$axios 
 const toast = useNuxtApp().$toast  
 
-onMounted(() =>
-{
-    const query = useRoute().query["res"]
-    
-    switch(query)
-    {
-        case "done":
-            toast.success("Your account has been created successfuly! Please activate your account befor expiration and login!")
-            break
-    }
-})
-
 const years = range(1900, new Date().getFullYear())
 const days = range(1, 31)
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -70,6 +58,26 @@ const submit = () =>
                         if(data["status"] === "success")
                         {
                             location.href = "/?res=done"
+                        }
+                        else if(data["code"])
+                        {
+                            const code = data["code"]
+
+                            switch(code)
+                            {
+                                case "too_req":
+                                    toast.error("Your number of requests exceeded the limit. Please try again in 1 hour!")
+                                    break
+                                case "n_req":
+                                    toast.warning(data["msg"])
+                                    break
+                                case "reg_d_ne":
+                                    toast.warning("Error while sending registration email! Please contact admins or try again in hours.")
+                                    break
+                                case "us_exi":
+                                    toast.warning("User already exists!")
+                                    break
+                            }
                         }
                     })    
             }
