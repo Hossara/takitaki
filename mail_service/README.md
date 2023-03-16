@@ -1,5 +1,5 @@
 # Mail Service
-TakiTaki crash report service
+TakiTaki mail service
 
 - [x] Sending regular email
 - [ ] Sending html email
