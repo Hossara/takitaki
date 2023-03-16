@@ -11,8 +11,17 @@ TakiTaki is based on microservice architecture.
 - [Mail Service](mail_service)
 
 ### Frameworks and languages
-Main backend framework is `spring boot` but I also used `FastApi` for some services and
-main Frontend framework is `Nuxt.js`
+- Backend
+  - Spring boot
+    - Kotlin
+    - Gradle
+  - FastApi
+    - Python
+- Frontend
+  - Nuxt.js
+    - Tailwind
+    - TypeScript
+    - Sass
 
 ### Contact
 Developer: [Hossein Araghi](mailto:hoseinaraghi84@gmail.com)
