@@ -30,6 +30,7 @@ dependencies {
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("io.netty:netty-tcnative-boringssl-static:2.0.59.Final")
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
