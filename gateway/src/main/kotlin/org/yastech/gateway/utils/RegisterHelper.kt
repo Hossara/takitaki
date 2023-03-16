@@ -28,7 +28,7 @@ fun validateFields(user: RegisterUser): MutableMap<String, Any>
         "msg" to "Date is invalid! format: dd/mm/yyyy"
     )
 
-    if (!GENDER.values().contains(user.gender)) return mutableMapOf(
+    if (!GENDER.values().contentToString().contains(user.gender)) return mutableMapOf(
         "status" to "error",
         "msg" to "Gender invalid!"
     )

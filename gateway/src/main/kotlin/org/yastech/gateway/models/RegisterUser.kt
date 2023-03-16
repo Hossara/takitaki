@@ -8,6 +8,6 @@ data class RegisterUser
     var firstname: String,
     var lastname: String,
     var birthday: String,
-    var gender: GENDER,
+    var gender: String,
     var password: String
 )
