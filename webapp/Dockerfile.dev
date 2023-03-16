@@ -1,0 +1,6 @@
+FROM node:16
+COPY ./ /app
+WORKDIR /app
+RUN echo ls
+RUN yarn install
+CMD [ "yarn", "dev" ]

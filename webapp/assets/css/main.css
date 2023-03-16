@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: "SF";
+        font-weight: normal;
+        font-style: normal;
+        src: url("../fonts/SFPRODISPLAY_REGULAR.OTF");
+    }
+
+    @font-face {
+        font-family: "SF";
+        font-weight: bold;
+        font-style: normal;
+        src: url("../fonts/SFPRODISPLAY_BOLD.OTF");
+    }
+
+    @font-face {
+        font-family: "SF";
+        font-weight: 500;
+        font-style: normal;
+        src: url("../fonts/SFPRODISPLAY_MEDIUM.OTF");
+    }
+
+    @font-face {
+        font-family: "SF";
+        font-weight: 600;
+        font-style: italic;
+        src: url("../fonts/SFPRODISPLAY_SEMI_BOLD_ITALIC.OTF");
+    }
+
+    @font-face {
+        font-family: "SF";
+        font-weight: 900;
+        font-style: italic;
+        src: url("../fonts/SFPRODISPLAY_HEAVY_ITALIC.OTF");
+    }
+
+    @font-face {
+        font-family: "SF";
+        font-weight: 950;
+        font-style: italic;
+        src: url("../fonts/SFPRODISPLAY_BLACK_ITALIC.OTF");
+    }
+
+    @font-face {
+        font-family: "SF";
+        font-weight: 100;
+        font-style: italic;
+        src: url("../fonts/SFPRODISPLAY_THIN_ITALIC.OTF");
+    }
+
+    @font-face {
+        font-family: "SF";
+        font-weight: 200;
+        font-style: italic;
+        src: url("../fonts/SFPRODISPLAY_ULTRA_LIGHT_ITALIC.OTF");
+    }
+
+    @font-face {
+        font-family: "SF";
+        font-weight: 300;
+        font-style: italic;
+        src: url("../fonts/SFPRODISPLAY_LIGHT_ITALIC.OTF");
+    }
+
+    body {
+        background-color: whitesmoke;
+        @apply font-sf;
+    }
+
+    * {
+        @apply duration-[0.2s];
+    }
+}
