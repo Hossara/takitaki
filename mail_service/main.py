@@ -2,6 +2,7 @@ import os
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from email_sender import sender
+from Mail import Mail
 
 app = FastAPI()
 load_dotenv()
@@ -18,7 +19,7 @@ print(f"INFO:     SMTP_PASS: {smtp_password}")
 
 
 @app.post("/mail")
-async def root(subject, content, to):
+async def root(email: Mail):
 
-    print(f"INFO:     New mail: {subject} | {to}")
-    sender.send(subject, content, to)
+    print(f"INFO:     New mail: {email.subject} | {email.to}")
+    mail.send(email.subject, email.message, email.to)

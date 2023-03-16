@@ -1,11 +1,6 @@
-# Test your FastAPI endpoints
+# Test FastAPI endpoints
 
-GET http://127.0.0.1:8000/
-Accept: application/json
-
-###
-
-GET http://127.0.0.1:8000/hello/User
+POST http://127.0.0.1:8000/mail?subject=test&content=testl&to=hoseinaraghi84@gmail.com
 Accept: application/json
 
 ###

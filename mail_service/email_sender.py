@@ -1,6 +1,7 @@
 import ssl
 import smtplib
 from datetime import date
+from email.message import EmailMessage
 
 
 class sender:
@@ -21,8 +22,18 @@ class sender:
                 # Login
                 server.login(self.email, self.password)
 
-                # Send
-                server.sendmail(self.email, to, f"Subject: {subject}\n{message}\n© {date.year} TakiTaki")
+                # Message
+                em = EmailMessage()
+                em.set_content(f"{message}\n\n© {date.today().year} TakiTaki")
 
-        except:
-            print(f"INFO:     Error while sending report email!")
+                # Message Information
+                em["To"] = to
+                em["From"] = self.email
+                em["Subject"] = subject
+
+                # Send
+                server.send_message(em)
+
+        except Exception as e:
+            print(e)
+            print(f"INFO:     Error while sending email!")
