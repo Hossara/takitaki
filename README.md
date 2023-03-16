@@ -23,5 +23,13 @@ TakiTaki is based on microservice architecture.
     - TypeScript
     - Sass
 
+### Project SDK
+- Java
+  - Azul Zulu 19.0.2
+- Gradle
+  - Version 7.6.1-bin
+- Python
+  - Version 3.11
+
 ### Contact
 Developer: [Hossein Araghi](mailto:hoseinaraghi84@gmail.com)
