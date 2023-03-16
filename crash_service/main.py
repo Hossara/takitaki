@@ -55,10 +55,11 @@ async def root(err: str = "", msg: str = "", err_type: str = "WARNING"):
         print(f"INFO:     Report saved with id: {report_id}")
         return {"status": "success", "id": report_id}
 
-    except:
+    except Exception as e:
         # Send Error Alert Email
         mail.send(message="Error while saving report")
 
         # Log Report And Finish
         print(f"INFO:     Error while saving report")
+        print(f"INFO:     {e}")
         return {"status": "error", "msg": "error while saving report"}

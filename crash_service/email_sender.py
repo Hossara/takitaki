@@ -23,5 +23,6 @@ class sender:
                 # Send
                 server.sendmail(self.email, self.email, f"Subject: {subject}\n{message}\nTakiTaki")
 
-        except:
+        except Exception as e:
             print(f"INFO:     Error while sending report email!")
+            print(f"INFO:     {e}")
