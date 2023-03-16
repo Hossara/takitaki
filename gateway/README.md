@@ -2,7 +2,7 @@
 TakiTaki microservice gateway and auth service
 
 - [x] Load-Balancing and routing
-- [X] Register adn validate user
+- [X] Register and validate user
 - [ ] Authenticate user and login
 
 ### Environment Variables
