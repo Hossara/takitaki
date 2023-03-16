@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import org.yastech.gateway.models.CrashModel
 import org.yastech.gateway.utils.HttpClient
 @Service
-class CrashReport
+class CrashReportService
 (private val http: HttpClient)
 {
     private val logger: Logger = LoggerFactory.getLogger(HttpClient::class.java)
@@ -17,7 +17,7 @@ class CrashReport
             "err" to detail.error.value,
             "msg" to detail.message,
             "type" to detail.type
-        ))
+        ), null)
 
         logger.info("CrashReport sent with this response: $res")
     }
