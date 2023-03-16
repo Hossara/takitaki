@@ -1,6 +1,9 @@
 # TakiTaki
 Smart, AI-Based, Powerful social media
 
+![Status](https://img.shields.io/badge/Status-development-orange)
+![Version](https://img.shields.io/badge/Version-0.0.2-orange)
+
 ### Project Structure
 TakiTaki is based on microservice architecture. 
 - [Gateway](gateway)
