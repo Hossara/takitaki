@@ -157,7 +157,7 @@ class AuthApi
         else mutableMapOf("status" to "error", "code" to "us_exi")
     }
 
-    @PostMapping("/complete/{email}/{code}")
+    @PostMapping("/validate/{email}/{code}")
     fun complete(@PathVariable code: String, @PathVariable email: String): MutableMap<String, String>
     {
         if (invalidUserService.exists(email))

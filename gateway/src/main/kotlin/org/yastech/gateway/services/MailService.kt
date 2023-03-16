@@ -22,7 +22,7 @@ class MailService
             "subject" to "TakiTaki registration!",
             "message" to "Hi ${firstname}!\nWelcome to TakiTaki. Your account has been created but not activated. " +
                     "Please click on link below to active your account. \n\n" +
-                    "$validateUrl/?res=validate&id=$id",
+                    "$validateUrl/?res=validate&id=$id&email=$email",
             "to" to email
         )).toString()
     }
